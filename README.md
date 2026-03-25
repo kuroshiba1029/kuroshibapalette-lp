@@ -1,1 +1,1 @@
-# Repository-name-kuroshibapalette-lp
+# kuroshibapalette-lp
