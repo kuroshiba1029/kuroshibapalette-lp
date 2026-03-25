@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>kuroshibapalette</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Noto+Sans+JP:wght@300;400&display=swap');
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --gold: #c9a84c;
+      --red: #b03030;
+      --white: #f0ece4;
+      --dark: #0a0a0f;
+      --mid: #13131e;
+      --glass: rgba(255,255,255,0.04);
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background-color: var(--dark);
+      color: var(--white);
+      font-family: 'Noto Sans JP', sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ---- HERO ---- */
+    .hero {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background-image: url('u8416518677_Close-up_of_a_biomechanical_long_blue_hair_female_cfabf3d0-2ccd-4544-bf28-8e26e403f185_1.png');
+      background-size: cover;
+      background-position: center top;
+      filter: brightness(0.35) saturate(0.7);
+      z-index: 0;
+    }
+
+    /* vertical gradient overlay */
+    .hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to bottom,
+        transparent 40%,
+        var(--dark) 100%
+      );
+      z-index: 1;
+    }
+
+    /* scan-line effect */
+    .hero-scanlines {
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(0,0,0,0.18) 2px,
+        rgba(0,0,0,0.18) 4px
+      );
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 3;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .logo-ring {
+      width: 160px;
+      height: 160px;
+      border-radius: 50%;
+      border: 2px solid var(--gold);
+      padding: 6px;
+      box-shadow:
+        0 0 20px rgba(201,168,76,0.4),
+        0 0 60px rgba(201,168,76,0.15);
+      animation: pulse-ring 4s ease-in-out infinite;
+    }
+
+    .logo-ring img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    @keyframes pulse-ring {
+      0%, 100% { box-shadow: 0 0 20px rgba(201,168,76,0.4), 0 0 60px rgba(201,168,76,0.15); }
+      50%       { box-shadow: 0 0 30px rgba(201,168,76,0.7), 0 0 90px rgba(201,168,76,0.3); }
+    }
+
+    .hero-title {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(2rem, 6vw, 4rem);
+      letter-spacing: 0.2em;
+      color: var(--white);
+      text-shadow:
+        0 0 10px rgba(201,168,76,0.5),
+        0 0 40px rgba(201,168,76,0.2);
+    }
+
+    .hero-tagline {
+      font-size: clamp(0.8rem, 2vw, 1rem);
+      letter-spacing: 0.35em;
+      color: var(--gold);
+      text-transform: uppercase;
+      font-weight: 300;
+    }
+
+    .scroll-hint {
+      position: absolute;
+      bottom: 36px;
+      z-index: 3;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      opacity: 0.6;
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      animation: fade-bounce 2s ease-in-out infinite;
+    }
+
+    .scroll-hint::after {
+      content: '';
+      display: block;
+      width: 1px;
+      height: 40px;
+      background: linear-gradient(to bottom, var(--gold), transparent);
+    }
+
+    @keyframes fade-bounce {
+      0%, 100% { transform: translateY(0); opacity: 0.5; }
+      50%       { transform: translateY(6px); opacity: 0.9; }
+    }
+
+    /* ---- SECTION COMMON ---- */
+    section {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 80px 24px;
+    }
+
+    .section-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 12px;
+    }
+
+    .section-title {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(1.4rem, 3vw, 2rem);
+      margin-bottom: 32px;
+      color: var(--white);
+    }
+
+    /* ---- ABOUT ---- */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: center;
+    }
+
+    .about-img {
+      width: 100%;
+      border-radius: 4px;
+      border: 1px solid rgba(201,168,76,0.3);
+      box-shadow: 0 0 30px rgba(0,0,0,0.6);
+    }
+
+    .about-text {
+      line-height: 1.9;
+      color: rgba(240,236,228,0.75);
+      font-size: 0.95rem;
+    }
+
+    .about-text + .about-text {
+      margin-top: 16px;
+      font-size: 0.85rem;
+      color: rgba(240,236,228,0.5);
+      font-style: italic;
+    }
+
+    /* ---- DIVIDER ---- */
+    .divider {
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--gold), transparent);
+      opacity: 0.3;
+    }
+
+    /* ---- LISTEN ---- */
+    .listen-section {
+      text-align: center;
+    }
+
+    .listen-section .section-title {
+      margin-bottom: 48px;
+    }
+
+    .stream-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 16px;
+    }
+
+    .stream-btn {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 28px;
+      border: 1px solid rgba(201,168,76,0.35);
+      border-radius: 4px;
+      background: var(--glass);
+      backdrop-filter: blur(8px);
+      color: var(--white);
+      text-decoration: none;
+      font-size: 0.9rem;
+      letter-spacing: 0.08em;
+      transition: all 0.25s ease;
+      min-width: 180px;
+      justify-content: center;
+    }
+
+    .stream-btn:hover {
+      background: rgba(201,168,76,0.12);
+      border-color: var(--gold);
+      box-shadow: 0 0 18px rgba(201,168,76,0.25);
+      transform: translateY(-2px);
+    }
+
+    .stream-btn svg {
+      width: 22px;
+      height: 22px;
+      flex-shrink: 0;
+    }
+
+    /* ---- FOOTER ---- */
+    footer {
+      border-top: 1px solid rgba(255,255,255,0.06);
+      padding: 32px 24px;
+      text-align: center;
+      font-size: 0.75rem;
+      color: rgba(240,236,228,0.3);
+      letter-spacing: 0.15em;
+    }
+
+    /* ---- RESPONSIVE ---- */
+    @media (max-width: 600px) {
+      .about-grid {
+        grid-template-columns: 1fr;
+      }
+      .stream-btn {
+        width: 100%;
+        max-width: 320px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-scanlines"></div>
+
+    <div class="hero-content">
+      <div class="logo-ring">
+        <img src="prf.png" alt="kuroshibapalette logo" />
+      </div>
+      <h1 class="hero-title">kuroshibapalette</h1>
+      <p class="hero-tagline">AI Music Artist</p>
+    </div>
+
+    <div class="scroll-hint">Listen</div>
+  </div>
+
+  <!-- ABOUT -->
+  <section>
+    <div class="about-grid">
+      <img
+        class="about-img"
+        src="u8416518677_Close-up_of_a_biomechanical_long_blue_hair_female_cfabf3d0-2ccd-4544-bf28-8e26e403f185_1.png"
+        alt="kuroshibapalette artist"
+      />
+      <div>
+        <p class="section-label">About</p>
+        <h2 class="section-title">Who We Are</h2>
+        <p class="about-text">
+          AI &times; Music &times; Visual &nbsp; Easy updates🎸🎶<br>
+          The world keeps changing, but I'm happy if you can enjoy even a small moment created with AI🌍✨
+        </p>
+        <p class="about-text">
+          世界は変わり続けているけれど、AIで生まれた小さなひとときを、あなたが楽しんでくれたら嬉しいです🌍✨
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- LISTEN -->
+  <section class="listen-section">
+    <p class="section-label">Streaming</p>
+    <h2 class="section-title">Listen Now</h2>
+
+    <div class="stream-grid">
+
+      <!-- Spotify -->
+      <a class="stream-btn" href="https://open.spotify.com/intl-ja/artist/0OFXacOlqEejo9tCfS20iP?si=xHcK5bWPTwSTlPrgI9FYFw" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm4.586 14.424a.622.622 0 0 1-.857.207c-2.348-1.435-5.304-1.76-8.785-.964a.623.623 0 0 1-.277-1.215c3.809-.87 7.076-.496 9.712 1.115a.623.623 0 0 1 .207.857zm1.223-2.722a.78.78 0 0 1-1.072.257c-2.687-1.652-6.785-2.131-9.965-1.166a.78.78 0 0 1-.973-.519.781.781 0 0 1 .52-.973c3.632-1.102 8.147-.568 11.233 1.329a.78.78 0 0 1 .257 1.072zm.105-2.835C14.692 8.95 9.375 8.775 6.297 9.71a.937.937 0 1 1-.543-1.794c3.541-1.073 9.437-.866 13.158 1.37a.937.937 0 0 1-.998 1.581z"/>
+        </svg>
+        Spotify
+      </a>
+
+      <!-- Apple Music -->
+      <a class="stream-btn" href="https://music.apple.com/jp/artist/kuroshibapalette/1816232768" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+          <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
+        </svg>
+        Apple Music
+      </a>
+
+      <!-- YouTube Music -->
+      <a class="stream-btn" href="https://music.youtube.com/channel/UCDcl_8VGtZuM_pQsw5YDSgw?si=X7gso9UWRpZtURgl" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 0C5.376 0 0 5.376 0 12s5.376 12 12 12 12-5.376 12-12S18.624 0 12 0zm0 19.104c-3.924 0-7.104-3.18-7.104-7.104S8.076 4.896 12 4.896s7.104 3.18 7.104 7.104-3.18 7.104-7.104 7.104zm0-13.332c-3.432 0-6.228 2.796-6.228 6.228S8.568 18.228 12 18.228s6.228-2.796 6.228-6.228S15.432 5.772 12 5.772zM9.684 15.54V8.46L16.2 12l-6.516 3.54z"/>
+        </svg>
+        YouTube Music
+      </a>
+
+      <!-- Amazon Music -->
+      <a class="stream-btn" href="https://music.amazon.co.jp/artists/B0F9L7Y8NN?ref=dm_sh_3J25NOisadc7VdIEJiD7TN6ot" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+          <path d="M13.958 10.09c0 1.232.029 2.256-.591 3.351-.502.891-1.301 1.438-2.186 1.438-1.214 0-1.922-.924-1.922-2.292 0-2.692 2.415-3.182 4.7-3.182v.685zm3.186 7.705c-.209.189-.512.201-.745.074-1.047-.872-1.237-1.276-1.814-2.106-1.734 1.767-2.962 2.297-5.209 2.297-2.66 0-4.731-1.641-4.731-4.925 0-2.565 1.391-4.309 3.37-5.164 1.715-.754 4.11-.891 5.942-1.099v-.41c0-.753.06-1.642-.383-2.294-.386-.578-1.124-.818-1.775-.818-1.206 0-2.277.618-2.54 1.897-.054.285-.261.567-.549.582l-3.061-.333c-.259-.056-.547-.266-.472-.661C5.57 1.957 8.39.5 11.037.5c1.346 0 3.104.358 4.165 1.378 1.346 1.257 1.218 2.932 1.218 4.758v4.308c0 1.295.537 1.866 1.044 2.566.177.25.216.547-.006.733l-2.314 1.552zm3.855 2.783c-2.707 1.764-6.635 2.702-10.013 2.702-4.738 0-9.003-1.753-12.228-4.666-.253-.228-.026-.54.279-.363 3.483 2.026 7.79 3.244 12.238 3.244 3 0 6.301-.623 9.338-1.905.459-.196.843.301.386.988z"/>
+        </svg>
+        Amazon Music
+      </a>
+
+      <!-- LINE MUSIC -->
+      <a class="stream-btn" href="https://lin.ee/WUqXavD" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+          <path d="M19.365 9.863c.349 0 .63.285.63.631 0 .345-.281.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .344-.281.629-.63.629h-2.386c-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.627-.63h2.386c.349 0 .63.285.63.63 0 .349-.281.63-.63.63H17.61v1.125h1.755zm-3.855 3.016c0 .27-.174.51-.432.596-.064.021-.133.031-.199.031-.211 0-.391-.09-.51-.25l-2.443-3.317v2.94c0 .344-.279.629-.631.629-.346 0-.626-.285-.626-.629V8.108c0-.27.173-.51.43-.595.06-.023.136-.033.194-.033.195 0 .375.104.495.254l2.462 3.33V8.108c0-.345.282-.63.63-.63.345 0 .63.285.63.63v4.771zm-5.741 0c0 .344-.282.629-.631.629-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.627-.63.349 0 .631.285.631.63v4.771zm-2.466.629H4.917c-.345 0-.63-.285-.63-.629V8.108c0-.345.285-.63.63-.63.348 0 .63.285.63.63v4.141h1.756c.348 0 .629.283.629.63 0 .344-.281.629-.629.629M24 10.314C24 4.943 18.615.572 12 .572S0 4.943 0 10.314c0 4.811 4.27 8.842 10.035 9.608.391.082.923.258 1.058.59.12.301.079.766.038 1.08l-.164 1.02c-.045.301-.24 1.186 1.049.645 1.291-.539 6.916-4.078 9.436-6.975C23.176 14.393 24 12.458 24 10.314"/>
+        </svg>
+        LINE MUSIC
+      </a>
+
+      <!-- YouTube -->
+      <a class="stream-btn" href="https://youtube.com/@rps-b8b?si=H0VJ5ktri090Lv_h" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+          <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+        </svg>
+        YouTube
+      </a>
+
+      <!-- TikTok -->
+      <a class="stream-btn" href="https://www.tiktok.com/@kuroshibapalette1029?is_from_webapp=1&sender_device=pc" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+          <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.27 8.27 0 0 0 4.84 1.55V6.79a4.85 4.85 0 0 1-1.07-.1z"/>
+        </svg>
+        TikTok
+      </a>
+
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>&copy; 2025 kuroshibapalette. All rights reserved.</p>
+  </footer>
+
+</body>
+</html>
