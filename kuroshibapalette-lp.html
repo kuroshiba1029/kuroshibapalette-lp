@@ -57,7 +57,6 @@
       z-index: 0;
     }
 
-    /* vertical gradient overlay */
     .hero::after {
       content: '';
       position: absolute;
@@ -70,7 +69,6 @@
       z-index: 1;
     }
 
-    /* scan-line effect */
     .hero-scanlines {
       position: absolute;
       inset: 0;
@@ -270,6 +268,84 @@
       flex-shrink: 0;
     }
 
+    /* ---- SHARE ---- */
+    .share-section {
+      text-align: center;
+      padding: 48px 24px 64px;
+    }
+
+    .share-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 20px;
+    }
+
+    .share-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      padding: 16px 40px;
+      border: 1px solid var(--gold);
+      border-radius: 4px;
+      background: transparent;
+      color: var(--gold);
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.8rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .share-btn::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--gold);
+      transform: translateX(-100%);
+      transition: transform 0.3s ease;
+      z-index: 0;
+    }
+
+    .share-btn:hover::before {
+      transform: translateX(0);
+    }
+
+    .share-btn:hover {
+      color: var(--dark);
+      box-shadow: 0 0 24px rgba(201,168,76,0.4);
+    }
+
+    .share-btn span,
+    .share-btn svg {
+      position: relative;
+      z-index: 1;
+    }
+
+    .share-btn svg {
+      width: 18px;
+      height: 18px;
+      transition: color 0.25s ease;
+    }
+
+    .share-btn.copied {
+      border-color: #5ecf7a;
+      color: #5ecf7a;
+    }
+
+    .share-btn.copied::before {
+      background: #5ecf7a;
+      transform: translateX(0);
+    }
+
+    .share-btn.copied:hover {
+      color: var(--dark);
+    }
+
     /* ---- FOOTER ---- */
     footer {
       border-top: 1px solid rgba(255,255,255,0.06);
@@ -400,10 +476,39 @@
     </div>
   </section>
 
+  <div class="divider"></div>
+
+  <!-- SHARE -->
+  <div class="share-section">
+    <p class="share-label">Share</p>
+    <button class="share-btn" id="shareBtn" onclick="copyLink()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+      </svg>
+      <span id="shareBtnText">Copy Link</span>
+    </button>
+  </div>
+
   <!-- FOOTER -->
   <footer>
     <p>&copy; 2025 kuroshibapalette. All rights reserved.</p>
   </footer>
+
+  <script>
+    function copyLink() {
+      const btn = document.getElementById('shareBtn');
+      const txt = document.getElementById('shareBtnText');
+      navigator.clipboard.writeText(window.location.href).then(() => {
+        btn.classList.add('copied');
+        txt.textContent = 'Copied!';
+        setTimeout(() => {
+          btn.classList.remove('copied');
+          txt.textContent = 'Copy Link';
+        }, 2000);
+      });
+    }
+  </script>
 
 </body>
 </html>
