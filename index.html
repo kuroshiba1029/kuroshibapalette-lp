@@ -113,7 +113,7 @@ footer{border-top:1px solid rgba(255,255,255,.06);padding:34px 24px;text-align:c
       <p class="label">Listen on Apple Music</p>
       <h2 class="title">Listen on Apple Music</h2>
       <div class="embed-frame">
-        <iframe height="450" width="100%" title="Media player" src="https://embed.music.apple.com/us/album/before-then-ep/6765988590?itscg=30200&amp;itsct=music_box_player&amp;ls=1&amp;app=music&amp;mttnsubad=6765988590&amp;theme=auto" id="embedPlayer" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation-by-user-activation" allow="autoplay *; encrypted-media *; clipboard-write" style="border: 0px; border-radius: 12px; width: 100%; height: 450px; max-width: 660px;"></iframe>
+        <iframe id="embedPlayer" frameborder="0" allow="autoplay *; encrypted-media *; clipboard-write" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation" style="border:0;border-radius:12px;width:100%;max-width:660px;overflow:hidden;background:transparent;"></iframe>
       </div>
     </section>
     <div class="divider"></div>
@@ -157,6 +157,23 @@ footer{border-top:1px solid rgba(255,255,255,.06);padding:34px 24px;text-align:c
       btn.setAttribute('aria-label', '音ありで観る');
     }
   });
+})();
+</script>
+<script>
+(function(){
+  var embeds = [
+    {src:'https://embed.music.apple.com/jp/album/jack-back-again-ep/6816821310',    h:'450'},
+    {src:'https://embed.music.apple.com/jp/album/no-undo-ep/6791672180',             h:'450'},
+    {src:'https://embed.music.apple.com/jp/album/lose-yourself/1895794252?i=6764467871', h:'150'},
+    {src:'https://embed.music.apple.com/jp/album/blessed-and-tiny-ep/6812526540',   h:'450'},
+    {src:'https://embed.music.apple.com/jp/album/dice-single/1890582857',            h:'450'},
+    {src:'https://embed.music.apple.com/us/album/before-then-ep/6765988590',         h:'450'}
+  ];
+  var pick = embeds[Math.floor(Math.random() * embeds.length)];
+  var el = document.getElementById('embedPlayer');
+  el.src = pick.src;
+  el.height = pick.h;
+  el.style.height = pick.h + 'px';
 })();
 </script>
 <script>
